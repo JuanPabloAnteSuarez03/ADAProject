@@ -64,12 +64,10 @@ def quicksort(arr):
             quicksort_recursive(bajo, pi - 1)
             quicksort_recursive(pi + 1, alto)
     
-    # Llamada inicial a la función recursiva
     quicksort_recursive(0, len(arr) - 1)
     return arr
 
 def ordenarJugadores(Sedes, Jugadores, M):
-    equipos = []
     for i in range(1, M+1):
         rendimientosFutbol = []
         rendimientosVolleyball = []
@@ -77,28 +75,80 @@ def ordenarJugadores(Sedes, Jugadores, M):
         listaVolleyball = Sedes[i]["Equipos"]["Volleyball"]
         
         for j in listaFutbol:
-            rendimientosFutbol.append((Jugadores[j]["Rendimiento"], Jugadores[j]["Edad"], j))
+            rendimientosFutbol.append((Jugadores[j]["Rendimiento"], j))
         
         for h in listaVolleyball:
-            rendimientosVolleyball.append((Jugadores[h]["Rendimiento"], Jugadores[h]["Edad"], h))
+            rendimientosVolleyball.append((Jugadores[h]["Rendimiento"], h))
         
         # Ordenar las listas de rendimientos usando quicksort
         rendimientosFutbol = quicksort(rendimientosFutbol)
         rendimientosVolleyball = quicksort(rendimientosVolleyball)
         
         # Actualizar las listas de jugadores en la sede con los jugadores ordenados
-        Sedes[i]["Equipos"]["Futbol"] = [j for rendimiento, edad, j in rendimientosFutbol]
-        Sedes[i]["Equipos"]["Volleyball"] = [h for rendimiento, edad, h in rendimientosVolleyball]
+        Sedes[i]["Equipos"]["Futbol"] = [j for rendimiento, j in rendimientosFutbol]
+        Sedes[i]["Equipos"]["Volleyball"] = [h for rendimiento, h in rendimientosVolleyball]
     
-    for u in range(1, M+1):
-        equipos.append((Sedes[u]["Ciudad"], "Futbol", Sedes[u]["Equipos"]["Futbol"]))
-        equipos.append((Sedes[u]["Ciudad"], "Volleyball", Sedes[u]["Equipos"]["Volleyball"]))
-    
-    return equipos
+    return Sedes
 
 
-# Llamada a la función para ordenar los jugadores dentro de cada equipo
+def ordenarEquipos(Sedes, Jugadores, M):
+    # Ordenar los jugadores dentro de cada equipo
+    Sedes = ordenarJugadores(Sedes, Jugadores, M)
+    
+    sedes_ordenadas = []
+    
+    for i in range(1, M+1):
+        sede = Sedes[i]
+        equipos_rendimiento = []
+        
+        for equipo in sede["Equipos"]:
+            rendimientos = [Jugadores[j]["Rendimiento"] for j in sede["Equipos"][equipo]]
+            promedio_rendimiento = statistics.mean(rendimientos)
+            equipos_rendimiento.append((promedio_rendimiento, equipo, sede["Equipos"][equipo]))
+        
+        # Ordenar los equipos por rendimiento promedio en orden descendente
+        equipos_rendimiento = quicksort(equipos_rendimiento)
+        equipos_rendimiento.reverse()  # Invertir para tener orden descendente
+        
+        # Crear una lista con los equipos ordenados
+        equipos_ordenados = [(equipo, jugadores) for _, equipo, jugadores in equipos_rendimiento]
+        
+        # Añadir la sede con los equipos ordenados a la lista
+        sedes_ordenadas.append((sede["Ciudad"], equipos_ordenados))
+    
+    return sedes_ordenadas
+
+def ordenarSedes(Sedes, Jugadores, M):
+    # Ordenar los jugadores dentro de cada equipo
+    Sedes = ordenarJugadores(Sedes, Jugadores, M)
+    
+    sedes_ordenadas = []
+    
+    for i in range(1, M+1):
+        sede = Sedes[i]
+        equipos_rendimiento = []
+        
+        for equipo in sede["Equipos"]:
+            rendimientos = [Jugadores[j]["Rendimiento"] for j in sede["Equipos"][equipo]]
+            promedio_rendimiento = statistics.mean(rendimientos)
+            equipos_rendimiento.append((promedio_rendimiento, equipo, sede["Equipos"][equipo]))
+        
+        # Ordenar los equipos por rendimiento promedio en orden descendente
+        equipos_rendimiento = quicksort(equipos_rendimiento)
+        equipos_rendimiento.reverse()  # Invertir para tener orden descendente
+        
+        # Crear una lista con los equipos ordenados
+        equipos_ordenados = [(equipo, jugadores) for _, equipo, jugadores in equipos_rendimiento]
+        
+        # Añadir la sede con los equipos ordenados a la lista
+        sedes_ordenadas.append((sede["Ciudad"], equipos_ordenados))
+    
+    # Ordenar las sedes por el promedio de rendimiento de sus equipos
+    sedes_ordenadas = quicksort(sedes_ordenadas)
+    sedes_ordenadas.reverse()  # Invertir para tener orden descendente
+    
+    return sedes_ordenadas
+
 print(ordenarJugadores(Sedes, Jugadores, M))
-
-# Mostrar el resultado
-# print(Sedes)
+print(ordenarEquipos(Sedes, Jugadores, M))
+print(ordenarSedes(Sedes, Jugadores, M))
