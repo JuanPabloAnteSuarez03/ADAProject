@@ -1,5 +1,15 @@
 from datos import *
 import statistics
+
+from datos import *
+import statistics
+
+def rankingJugador(Jugadores):
+    rendimientos = [(Jugadores[j]["Rendimiento"], j) for j in Jugadores]
+    rendimientos = quicksort(rendimientos)
+    jugadoresOrdenados = [j for _, j in rendimientos]
+    return jugadoresOrdenados
+
 def equipoMayorRendimiento(Sedes, Jugadores, M):
     arr = ordenarSedes(Sedes, Jugadores, M)
     return arr[0][1][0][0] + " sede " + arr[0][0]
@@ -9,16 +19,34 @@ def equipoMenorRendimiento(Sedes, Jugadores, M):
     return arr[-1][-1][-1][0] + " sede " + arr[-1][0]
 
 def jugadorMayorRendimiento(Jugadores):
-    rendimientos = [(Jugadores[j]["Rendimiento"], j) for j in Jugadores]
-    rendimientos = quicksort(rendimientos)
-    jugadoresOrdenados = [j for _, j in rendimientos]
+    jugadoresOrdenados = rankingJugador(Jugadores)
     return (jugadoresOrdenados[-1], Jugadores[jugadoresOrdenados[-1]]["Nombre"], Jugadores[jugadoresOrdenados[-1]]["Rendimiento"])
-
+    
 def jugadorMenorRendimiento(Jugadores):
-    rendimientos = [(Jugadores[j]["Rendimiento"], j) for j in Jugadores]
-    rendimientos = quicksort(rendimientos)
-    jugadoresOrdenados = [j for _, j in rendimientos]
+    jugadoresOrdenados = rankingJugador(Jugadores)
     return (jugadoresOrdenados[0], Jugadores[jugadoresOrdenados[0]]["Nombre"], Jugadores[jugadoresOrdenados[0]]["Rendimiento"])
+
+def jugadorMasJoven(Jugadores):
+    edades = [(Jugadores[j]["Edad"], j) for j in Jugadores]
+    edades = quicksort(edades)
+    jugadoresOrdenados = [j for _, j in edades]
+    return (jugadoresOrdenados[0], Jugadores[jugadoresOrdenados[0]]["Nombre"], Jugadores[jugadoresOrdenados[0]]["Edad"])
+
+def jugadormasVeterano(Jugadores):
+    edades = [(Jugadores[j]["Edad"], j) for j in Jugadores]
+    edades = quicksort(edades)
+    jugadoresOrdenados = [j for _, j in edades]
+    return (jugadoresOrdenados[-1], Jugadores[jugadoresOrdenados[-1]]["Nombre"], Jugadores[jugadoresOrdenados[-1]]["Edad"])
+
+def promedioEdadJugador(Jugadores):
+    edades = [Jugadores[j]["Edad"] for j in Jugadores]
+    promedio = sum(edades) / len(edades)
+    return promedio
+
+def promedioRendimientoJugador(Jugadores):
+    rendimientos = [Jugadores[j]["Rendimiento"] for j in Jugadores]
+    promedio = sum(rendimientos) / len(rendimientos)
+    return promedio
 
 # Usaremos QuickSort como algoritmo de ordenamiento
 def quicksort(arr):
@@ -114,10 +142,15 @@ def ordenarSedes(Sedes, Jugadores, M):
     
     return sedes_ordenadas
 
-# print(ordenarJugadores(Sedes, Jugadores, M))
-# print(ordenarEquipos(Sedes, Jugadores, M))
-# print(ordenarSedes(Sedes, Jugadores, M))
-# print(equipoMayorRendimiento(Sedes, Jugadores, M))
-# print(equipoMenorRendimiento(Sedes, Jugadores, M))
+print(ordenarJugadores(Sedes, Jugadores, M))
+print(ordenarEquipos(Sedes, Jugadores, M))
+print(ordenarSedes(Sedes, Jugadores, M))
+print(equipoMayorRendimiento(Sedes, Jugadores, M))
+print(equipoMenorRendimiento(Sedes, Jugadores, M))
 print(jugadorMayorRendimiento(Jugadores))
 print(jugadorMenorRendimiento(Jugadores)) 
+print(jugadorMasJoven(Jugadores))
+print(jugadormasVeterano(Jugadores))
+print(rankingJugador(Jugadores))
+print(promedioEdadJugador(Jugadores))
+print(promedioRendimientoJugador(Jugadores))
