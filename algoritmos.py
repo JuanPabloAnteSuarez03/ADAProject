@@ -1,9 +1,6 @@
 from datos import *
 import statistics
 
-from datos import *
-import statistics
-
 def rankingJugador(Jugadores):
     rendimientos = [(Jugadores[j]["Rendimiento"], j) for j in Jugadores]
     rendimientos = quicksort(rendimientos)
@@ -104,7 +101,7 @@ def ordenarEquipos(Sedes, Jugadores, M):
         
         for equipo in sede["Equipos"]:
             rendimientos = [Jugadores[j]["Rendimiento"] for j in sede["Equipos"][equipo]]
-            promedio_rendimiento = statistics.mean(rendimientos)
+            promedio_rendimiento = sum(rendimientos) / len(rendimientos)
             equipos_rendimiento.append((promedio_rendimiento, equipo, sede["Equipos"][equipo]))
         
         equipos_rendimiento = quicksort(equipos_rendimiento)
@@ -115,6 +112,7 @@ def ordenarEquipos(Sedes, Jugadores, M):
         sedes_ordenadas.append((sede["Ciudad"], equipos_ordenados))
     
     return sedes_ordenadas
+
 
 def ordenarSedes(Sedes, Jugadores, M):
     Sedes = ordenarJugadores(Sedes, Jugadores, M)
@@ -127,7 +125,7 @@ def ordenarSedes(Sedes, Jugadores, M):
         
         for equipo in sede["Equipos"]:
             rendimientos = [Jugadores[j]["Rendimiento"] for j in sede["Equipos"][equipo]]
-            promedio_rendimiento = statistics.mean(rendimientos)
+            promedio_rendimiento = sum(rendimientos) / len(rendimientos)
             equipos_rendimiento.append((promedio_rendimiento, equipo, sede["Equipos"][equipo]))
         
         equipos_rendimiento = quicksort(equipos_rendimiento)
@@ -141,6 +139,7 @@ def ordenarSedes(Sedes, Jugadores, M):
     sedes_ordenadas.reverse()
     
     return sedes_ordenadas
+
 
 print(ordenarJugadores(Sedes, Jugadores, M))
 print(ordenarEquipos(Sedes, Jugadores, M))
