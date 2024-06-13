@@ -1,7 +1,7 @@
 # Datos importados de datos.py
 from datos import *
 
-class NodoAB:
+class ABB:
     def __init__(self, clave, id_jugador):
         self.izquierda = None
         self.derecha = None
@@ -10,7 +10,7 @@ class NodoAB:
 
 def insertar(raiz, clave, id_jugador):
     if raiz is None:
-        return NodoAB(clave, id_jugador)
+        return ABB(clave, id_jugador)
     else:
         if raiz.val < clave:
             raiz.derecha = insertar(raiz.derecha, clave, id_jugador)
