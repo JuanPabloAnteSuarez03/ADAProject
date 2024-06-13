@@ -1,6 +1,7 @@
 from datos import *
 import statistics
 
+
 def rankingJugador(Jugadores):
     rendimientos = [(Jugadores[j]["Rendimiento"], j) for j in Jugadores]
     rendimientos = quicksort(rendimientos)
@@ -141,15 +142,38 @@ def ordenarSedes(Sedes, Jugadores, M):
     return sedes_ordenadas
 
 
+print("\nOrdenar jugadores por rendimiento en cada sede:")
 print(ordenarJugadores(Sedes, Jugadores, M))
+
+print("\nOrdenar equipos por promedio de rendimiento en cada sede:")
 print(ordenarEquipos(Sedes, Jugadores, M))
+
+print("\nOrdenar sedes por promedio de rendimiento de los equipos:")
 print(ordenarSedes(Sedes, Jugadores, M))
+
+print("\nEquipo con mayor rendimiento:")
 print(equipoMayorRendimiento(Sedes, Jugadores, M))
+
+print("\nEquipo con menor rendimiento:")
 print(equipoMenorRendimiento(Sedes, Jugadores, M))
+
+print("\nJugador con mayor rendimiento:")
 print(jugadorMayorRendimiento(Jugadores))
-print(jugadorMenorRendimiento(Jugadores)) 
+
+print("\nJugador con menor rendimiento:")
+print(jugadorMenorRendimiento(Jugadores))
+
+print("\nJugador más joven:")
 print(jugadorMasJoven(Jugadores))
+
+print("\nJugador más veterano:")
 print(jugadormasVeterano(Jugadores))
+
+print("\nRanking de jugadores por rendimiento:")
 print(rankingJugador(Jugadores))
+
+print("\nPromedio de edad de los jugadores:")
 print(promedioEdadJugador(Jugadores))
+
+print("\nPromedio de rendimiento de los jugadores:")
 print(promedioRendimientoJugador(Jugadores))
