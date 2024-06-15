@@ -1,33 +1,46 @@
-# Define los datos de los jugadores
-Jugadores = {
-    1: {"Nombre": "Juan", "Edad": 20, "Rendimiento": 94},
-    2: {"Nombre": "Maria", "Edad": 21, "Rendimiento": 94},
-    3: {"Nombre": "Pedro", "Edad": 22, "Rendimiento": 21},
-    4: {"Nombre": "Ana", "Edad": 23, "Rendimiento": 25},
-    5: {"Nombre": "Carlos", "Edad": 24, "Rendimiento": 66},
-    6: {"Nombre": "Laura", "Edad": 25, "Rendimiento": 52},
-    7: {"Nombre": "Jose", "Edad": 26, "Rendimiento": 48},
-    8: {"Nombre": "Luis", "Edad": 27, "Rendimiento": 73},
-    9: {"Nombre": "Sara", "Edad": 28, "Rendimiento": 92},
-    10: {"Nombre": "Jorge", "Edad": 29, "Rendimiento": 51},
-    11: {"Nombre": "Lorena", "Edad": 30, "Rendimiento": 90},
-    12: {"Nombre": "Raul", "Edad": 31, "Rendimiento": 100}
-}
+# Definición de la clase Jugador
+class Jugador:
+    def __init__(self, nombre, edad, rendimiento):
+        self.nombre = nombre
+        self.edad = edad
+        self.rendimiento = rendimiento
 
-# Define los datos de las sedes y equipos
-Sedes = {
-    1: {
-        "Ciudad": "Sede Cali",
-        "Equipos": {
-            "Futbol": [1, 2, 3],       # IDs de jugadores para equipo de Futbol
-            "Volleyball": [4, 5, 6]    # IDs de jugadores para equipo de Volleyball
-        }
-    },
-    2: {
-        "Ciudad": "Sede Medellin",
-        "Equipos": {
-            "Futbol": [7, 8, 9],       # IDs de jugadores para equipo de Futbol
-            "Volleyball": [10, 11, 12]  # IDs de jugadores para equipo de Volleyball
-        }
-    }
-}
+# Definición de la clase Equipo
+class Equipo:
+    def __init__(self, deporte, jugadores):
+        self.deporte = deporte
+        self.jugadores = jugadores
+
+# Definición de la clase Sede
+class Sede:
+    def __init__(self, ciudad, equipos):
+        self.ciudad = ciudad
+        self.equipos = equipos
+
+# Creación de los jugadores
+j1 = Jugador("Sofia Garcia", 21, 66)
+j2 = Jugador("Alejandro Torres", 27, 24)
+j3 = Jugador("Valentina Rodriguez", 19, 15)
+j4 = Jugador("Juan Lopez", 22, 78)
+j5 = Jugador("Martina Martinez", 30, 55)
+j6 = Jugador("Sebastian Perez", 25, 42)
+j7 = Jugador("Camila Fernandez", 24, 36)
+j8 = Jugador("Mateo Gonzalez", 29, 89)
+j9 = Jugador("Isabella Diaz", 21, 92)
+j10 = Jugador("Daniel Ruiz", 17, 57)
+j11 = Jugador("Luciana Sanchez", 18, 89)
+j12 = Jugador("Lucas Vasquez", 26, 82)
+
+# Creación de los equipos
+e1 = Equipo("Futbol", [j10, j2])
+e2 = Equipo("Volleyball", [j1, j9, j12, j6])
+e3 = Equipo("Futbol", [j11, j8, j7])
+e4 = Equipo("Volleyball", [j3, j4, j5])
+
+# Creación de las sedes
+s1 = Sede("Sede Cali", [e1, e2])
+s2 = Sede("Sede Medellin", [e3, e4])
+
+# Listas globales para ser utilizadas en el script principal
+Jugadores = [j1, j2, j3, j4, j5, j6, j7, j8, j9, j10, j11, j12]
+Sedes = [s1, s2]

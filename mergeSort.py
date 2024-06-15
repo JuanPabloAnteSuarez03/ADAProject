@@ -1,5 +1,4 @@
-# Datos importados de datos.py
-from datos import *
+from datos_test import Jugadores, Sedes
 
 class ABB:
     def __init__(self, clave, id_jugador):
@@ -64,90 +63,86 @@ def mergeSort(arr, l, r):
         merge(arr, l, m, r)
 
 # Función para obtener los rendimientos promedios de los equipos y sedes
-def rendimiento_promedio_equipo(equipo, jugadores):
-    rendimiento_total = sum(jugadores[id_jugador]["Rendimiento"] for id_jugador in equipo)
-    return rendimiento_total / len(equipo) if equipo else 0
+def rendimiento_promedio_equipo(equipo):
+    rendimiento_total = sum(jugador.rendimiento for jugador in equipo.jugadores)
+    return rendimiento_total / len(equipo.jugadores) if equipo.jugadores else 0
 
 # Ordenar jugadores por rendimiento usando árbol binario de búsqueda
 jugadores_ordenados = []
 raiz = None
 
-for id_jugador in Jugadores:
-    info_jugador = Jugadores[id_jugador]
-    clave = (info_jugador["Rendimiento"], -info_jugador["Edad"])
+for id_jugador, jugador in enumerate(Jugadores):
+    clave = (jugador.rendimiento, -jugador.edad)
     raiz = insertar(raiz, clave, id_jugador)
 
 recorrido_inorden(raiz, jugadores_ordenados)
 
-# Ordenar equipos dentro de cada sede por rendimiento usando merge sort
-for sede_id in Sedes:
-    sede = Sedes[sede_id]
-    for deporte in sede["Equipos"]:
-        equipo = sede["Equipos"][deporte]
-        arr = equipo[:]
-        mergeSort(arr, 0, len(arr) - 1)
-        sede["Equipos"][deporte] = arr
+# Ordenar equipos dentro de cada sede por rendimiento
+for sede in Sedes:
+    for equipo in sede.equipos:
+        equipo_ordenado = []
+        raiz_equipo = None
+        for jugador in equipo.jugadores:
+            clave = (jugador.rendimiento, -jugador.edad)
+            raiz_equipo = insertar(raiz_equipo, clave, jugador)
+        recorrido_inorden(raiz_equipo, equipo_ordenado)
+        equipo.jugadores = equipo_ordenado
 
 # Ordenar las sedes por rendimiento promedio y luego por cantidad de jugadores
 rendimiento_sedes = []
-for sede_id in Sedes:
-    sede = Sedes[sede_id]
+for sede in Sedes:
     rendimiento_total = 0
     total_jugadores = 0
-    for deporte in sede["Equipos"]:
-        equipo = sede["Equipos"][deporte]
-        rendimiento_total += sum(Jugadores[id_jugador]["Rendimiento"] for id_jugador in equipo)
-        total_jugadores += len(equipo)
+    for equipo in sede.equipos:
+        rendimiento_total += sum(jugador.rendimiento for jugador in equipo.jugadores)
+        total_jugadores += len(equipo.jugadores)
     rendimiento_promedio = rendimiento_total / total_jugadores if total_jugadores else 0
-    rendimiento_sedes.append((rendimiento_promedio, -total_jugadores, sede_id))
+    rendimiento_sedes.append((rendimiento_promedio, -total_jugadores, sede))
 
 mergeSort(rendimiento_sedes, 0, len(rendimiento_sedes) - 1)
 
-# Funciones actualizadas con Merge Sort
-
+# Funciones para obtener datos específicos
 def rankingJugador():
-    return jugadores_ordenados
+    return [Jugadores[i].nombre for i in jugadores_ordenados]
 
 def equipoMayorRendimiento():
     mejor_rendimiento = rendimiento_sedes[-1]
-    sede_id = mejor_rendimiento[2]
-    return Sedes[sede_id]["Ciudad"]
+    return mejor_rendimiento[2].ciudad
 
 def equipoMenorRendimiento():
     peor_rendimiento = rendimiento_sedes[0]
-    sede_id = peor_rendimiento[2]
-    return Sedes[sede_id]["Ciudad"]
+    return peor_rendimiento[2].ciudad
 
 def jugadorMayorRendimiento():
     jugador_id = jugadores_ordenados[-1]
-    jugador_info = Jugadores[jugador_id]
-    return jugador_id, jugador_info["Nombre"], jugador_info["Rendimiento"]
+    jugador = Jugadores[jugador_id]
+    return jugador_id, jugador.nombre, jugador.rendimiento
 
 def jugadorMenorRendimiento():
     jugador_id = jugadores_ordenados[0]
-    jugador_info = Jugadores[jugador_id]
-    return jugador_id, jugador_info["Nombre"], jugador_info["Rendimiento"]
+    jugador = Jugadores[jugador_id]
+    return jugador_id, jugador.nombre, jugador.rendimiento
 
 def jugadorMasJoven():
-    edades = [(Jugadores[jugador_id]["Edad"], jugador_id) for jugador_id in Jugadores]
+    edades = [(jugador.edad, jugador_id) for jugador_id, jugador in enumerate(Jugadores)]
     mergeSort(edades, 0, len(edades) - 1)
     jugador_id = edades[0][1]
-    jugador_info = Jugadores[jugador_id]
-    return jugador_id, jugador_info["Nombre"], jugador_info["Edad"]
+    jugador = Jugadores[jugador_id]
+    return jugador_id, jugador.nombre, jugador.edad
 
 def jugadorMasVeterano():
-    edades = [(Jugadores[jugador_id]["Edad"], jugador_id) for jugador_id in Jugadores]
+    edades = [(jugador.edad, jugador_id) for jugador_id, jugador in enumerate(Jugadores)]
     mergeSort(edades, 0, len(edades) - 1)
     jugador_id = edades[-1][1]
-    jugador_info = Jugadores[jugador_id]
-    return jugador_id, jugador_info["Nombre"], jugador_info["Edad"]
+    jugador = Jugadores[jugador_id]
+    return jugador_id, jugador.nombre, jugador.edad
 
 def promedioEdadJugador():
-    edades = [Jugadores[jugador_id]["Edad"] for jugador_id in Jugadores]
+    edades = [jugador.edad for jugador in Jugadores]
     return sum(edades) / len(edades) if edades else 0
 
 def promedioRendimientoJugador():
-    rendimientos = [Jugadores[jugador_id]["Rendimiento"] for jugador_id in Jugadores]
+    rendimientos = [jugador.rendimiento for jugador in Jugadores]
     return sum(rendimientos) / len(rendimientos) if rendimientos else 0
 
 # Imprimir resultados
