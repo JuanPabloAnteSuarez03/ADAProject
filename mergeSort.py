@@ -1,4 +1,4 @@
-from datos_test import Jugadores, Sedes
+from datos_test import *
 
 class ABB:
     def __init__(self, clave, id_jugador):
