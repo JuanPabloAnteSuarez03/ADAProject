@@ -77,16 +77,16 @@ for id_jugador, jugador in enumerate(Jugadores):
 
 recorrido_inorden(raiz, jugadores_ordenados)
 
-# Ordenar equipos dentro de cada sede por rendimiento
+# Ordenar equipos dentro de cada sede por rendimiento usando merge sort
 for sede in Sedes:
     for equipo in sede.equipos:
         equipo_ordenado = []
         raiz_equipo = None
         for jugador in equipo.jugadores:
             clave = (jugador.rendimiento, -jugador.edad)
-            raiz_equipo = insertar(raiz_equipo, clave, jugador)
+            raiz_equipo = insertar(raiz_equipo, clave, Jugadores.index(jugador))
         recorrido_inorden(raiz_equipo, equipo_ordenado)
-        equipo.jugadores = equipo_ordenado
+        equipo.jugadores = [Jugadores[i] for i in equipo_ordenado]
 
 # Ordenar las sedes por rendimiento promedio y luego por cantidad de jugadores
 rendimiento_sedes = []
@@ -103,39 +103,41 @@ mergeSort(rendimiento_sedes, 0, len(rendimiento_sedes) - 1)
 
 # Funciones para obtener datos específicos
 def rankingJugador():
-    return [Jugadores[i].nombre for i in jugadores_ordenados]
+    return [jugadores_ordenados[i] + 1 for i in range(len(jugadores_ordenados))]
 
 def equipoMayorRendimiento():
-    mejor_rendimiento = rendimiento_sedes[-1]
-    return mejor_rendimiento[2].ciudad
+    mejor_rendimiento = max((sum(jugador.rendimiento for jugador in equipo.jugadores) / len(equipo.jugadores), equipo.deporte, sede.ciudad)
+                            for sede in Sedes for equipo in sede.equipos)
+    return mejor_rendimiento[1] + " Sede " + mejor_rendimiento[2]
 
 def equipoMenorRendimiento():
-    peor_rendimiento = rendimiento_sedes[0]
-    return peor_rendimiento[2].ciudad
+    peor_rendimiento = min((sum(jugador.rendimiento for jugador in equipo.jugadores) / len(equipo.jugadores), equipo.deporte, sede.ciudad)
+                           for sede in Sedes for equipo in sede.equipos)
+    return peor_rendimiento[1] + " Sede " + peor_rendimiento[2]
 
 def jugadorMayorRendimiento():
     jugador_id = jugadores_ordenados[-1]
     jugador = Jugadores[jugador_id]
-    return jugador_id, jugador.nombre, jugador.rendimiento
+    return (jugador_id + 1, jugador.nombre, jugador.rendimiento)
 
 def jugadorMenorRendimiento():
     jugador_id = jugadores_ordenados[0]
     jugador = Jugadores[jugador_id]
-    return jugador_id, jugador.nombre, jugador.rendimiento
+    return (jugador_id + 1, jugador.nombre, jugador.rendimiento)
 
 def jugadorMasJoven():
     edades = [(jugador.edad, jugador_id) for jugador_id, jugador in enumerate(Jugadores)]
     mergeSort(edades, 0, len(edades) - 1)
     jugador_id = edades[0][1]
     jugador = Jugadores[jugador_id]
-    return jugador_id, jugador.nombre, jugador.edad
+    return (jugador_id + 1, jugador.nombre, jugador.edad)
 
 def jugadorMasVeterano():
     edades = [(jugador.edad, jugador_id) for jugador_id, jugador in enumerate(Jugadores)]
     mergeSort(edades, 0, len(edades) - 1)
     jugador_id = edades[-1][1]
     jugador = Jugadores[jugador_id]
-    return jugador_id, jugador.nombre, jugador.edad
+    return (jugador_id + 1, jugador.nombre, jugador.edad)
 
 def promedioEdadJugador():
     edades = [jugador.edad for jugador in Jugadores]
@@ -146,8 +148,15 @@ def promedioRendimientoJugador():
     return sum(rendimientos) / len(rendimientos) if rendimientos else 0
 
 # Imprimir resultados
-print("Ranking de Jugadores:")
-print(rankingJugador())
+for rendimiento_promedio, _, sede in rendimiento_sedes:
+    print("Sede " + sede.ciudad + ", Rendimiento: " + str(rendimiento_promedio))
+    for equipo in sede.equipos:
+        rendimiento_equipo = sum(jugador.rendimiento for jugador in equipo.jugadores) / len(equipo.jugadores)
+        print(equipo.deporte + ", Rendimiento: " + str(rendimiento_equipo))
+        print("{" + ", ".join(str(Jugadores.index(jugador) + 1) for jugador in equipo.jugadores) + "}")
+
+print("\nRanking de Jugadores:")
+print("{" + ", ".join(str(id_jugador + 1) for id_jugador in rankingJugador()) + "}")
 
 print("\nEquipo con Mayor Rendimiento:")
 print(equipoMayorRendimiento())
@@ -156,16 +165,20 @@ print("\nEquipo con Menor Rendimiento:")
 print(equipoMenorRendimiento())
 
 print("\nJugador con Mayor Rendimiento:")
-print(jugadorMayorRendimiento())
+jug_may_rend = jugadorMayorRendimiento()
+print("{" + str(jug_may_rend[0]) + " , " + jug_may_rend[1] + " , " + str(jug_may_rend[2]) + "}")
 
 print("\nJugador con Menor Rendimiento:")
-print(jugadorMenorRendimiento())
+jug_men_rend = jugadorMenorRendimiento()
+print("{" + str(jug_men_rend[0]) + " , " + jug_men_rend[1] + " , " + str(jug_men_rend[2]) + "}")
 
 print("\nJugador Más Joven:")
-print(jugadorMasJoven())
+jug_mas_joven = jugadorMasJoven()
+print("{" + str(jug_mas_joven[0]) + " , " + jug_mas_joven[1] + " , " + str(jug_mas_joven[2]) + "}")
 
 print("\nJugador Más Veterano:")
-print(jugadorMasVeterano())
+jug_mas_veterano = jugadorMasVeterano()
+print("{" + str(jug_mas_veterano[0]) + " , " + jug_mas_veterano[1] + " , " + str(jug_mas_veterano[2]) + "}")
 
 print("\nPromedio de Edad de los Jugadores:")
 print(promedioEdadJugador())
