@@ -193,4 +193,4 @@ fin_total = time.time()
 
 # Calcula el tiempo total transcurrido
 tiempo_transcurrido_total = fin_total - inicio_total
-print(f"\nTiempo total de ejecución del archivo: {tiempo_transcurrido_total} segundos")
+print(f"\nTiempo total de ejecución: {tiempo_transcurrido_total} segundos")
