@@ -1,6 +1,8 @@
 from datos import *
 import statistics
+import time
 
+inicio_total = time.time()
 
 def rankingJugador(Jugadores):
     rendimientos = [(Jugadores[j]["Rendimiento"], j) for j in Jugadores]
@@ -177,3 +179,9 @@ print(promedioEdadJugador(Jugadores))
 
 print("\nPromedio de rendimiento de los jugadores:")
 print(promedioRendimientoJugador(Jugadores))
+
+fin_total = time.time()
+
+# Calcula el tiempo total transcurrido
+tiempo_transcurrido_total = fin_total - inicio_total
+print(f"\nTiempo total de ejecución: {tiempo_transcurrido_total} segundos")

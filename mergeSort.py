@@ -1,4 +1,7 @@
 from datos_test import *
+import time
+
+inicio_total = time.time()
 
 class ABB:
     def __init__(self, clave, id_jugador):
@@ -185,3 +188,9 @@ print(promedioEdadJugador())
 
 print("\nPromedio de Rendimiento de los Jugadores:")
 print(promedioRendimientoJugador())
+
+fin_total = time.time()
+
+# Calcula el tiempo total transcurrido
+tiempo_transcurrido_total = fin_total - inicio_total
+print(f"\nTiempo total de ejecución del archivo: {tiempo_transcurrido_total} segundos")
