@@ -76,4 +76,4 @@ todas las sedes basado en su rendimiento ascendente.
 
 - [Guerrero Cano, Alejandro](https://github.com/Alejo101102) - 202179652
 
-- [Guerrero Cano, Alejandro](https://github.com/AlejoZA) - 201941088
+- [Zamorano, Alejandro](https://github.com/AlejoZA) - 201941088
