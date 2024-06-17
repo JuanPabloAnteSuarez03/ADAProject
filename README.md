@@ -17,10 +17,6 @@ además de ordenar las sedes según el promedio de rendimiento de sus equipos
 y la cantidad de jugadores. También se genera un ranking de jugadores en 
 todas las sedes basado en su rendimiento ascendente.
 
-## Tabla de Contenidos :scroll:
-
-
-
 
 ## Instrucciones para ejecutar el codigo :computer:
 
@@ -56,10 +52,6 @@ todas las sedes basado en su rendimiento ascendente.
        
          python mergeSort.py
        
-    
-   (Para el algorimo HeapSort:) :arrow_down:
-       
-         python heapSort.py
        
 
 ## Institución :mortar_board:
@@ -70,9 +62,9 @@ todas las sedes basado en su rendimiento ascendente.
 
 ## Contribuyentes :busts_in_silhouette:
 
-- [Mosquera Zapata, Wilson Andres](https://github.com/andresengineer)
+- [Mosquera Zapata, Wilson Andres](https://github.com/andresengineer) - 202182116
 
-- [Ante Suárez, Juan Pablo](https://github.com/JuanPabloAnteSuarez03/)
+- [Ante Suárez, Juan Pablo](https://github.com/JuanPabloAnteSuarez03/) - 2140132
 
 - [Guerrero Cano, Alejandro](https://github.com/Alejo101102) - 202179652
 
