@@ -72,4 +72,4 @@ todas las sedes basado en su rendimiento ascendente.
 
 - [Mosquera Zapata, Wilson Andres](https://github.com/andresengineer)
 
-- 
+- [Ante Suárez, Juan Pablo](https://github.com/JuanPabloAnteSuarez03/)
